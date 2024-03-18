@@ -26,6 +26,9 @@ class _LoginPageState extends State<LoginPage> {
         _passwordController.text,
       );
       await Storage.saveJwt(jwt);
+      setState(() {
+        _errorMessage = '';
+      });
     } catch (e) {
       setState(() {
         _errorMessage = 'Login failed: $e';

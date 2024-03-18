@@ -1,0 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
+
+part 'result_create_dto.freezed.dart';
+part 'result_create_dto.g.dart';
+
+@freezed
+@JsonSerializable(explicitToJson: true)
+class ResultCreateRequestDto with _$ResultCreateRequestDto {
+  factory ResultCreateRequestDto({
+    required String name,
+    required String description,
+    String? mediaPath,
+  }) = _ResultCreateRequestDto;
+
+  factory ResultCreateRequestDto.fromJson(Map<String, dynamic> json) => _$ResultCreateRequestDtoFromJson(json);
+}
