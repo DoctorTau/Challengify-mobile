@@ -1,4 +1,5 @@
 import 'package:challengify_app/src/Storage/JwtStorage.dart';
+import 'package:challengify_app/src/view/widgets/text_input.dart';
 import 'package:challengify_app/src/web_interactors/auth_interactor.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordConfirmationController = TextEditingController();
   final _authInteractor = AuthInteractor(baseUrl: 'http://10.0.2.2:8080');
 
   String _errorMessage = '';
@@ -23,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
         _usernameController.text,
         _emailController.text,
         _passwordController.text,
+        _passwordConfirmationController.text,
       );
       await Storage.saveJwt(jwt);
       if (Navigator.canPop(context)) {
@@ -45,23 +48,22 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              TextField(
+              TextInputWidget(
                 controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                ),
+                labelText: 'Username',
               ),
-              TextField(
+              TextInputWidget(
                 controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+                labelText: 'Email',
               ),
-              TextField(
+              TextInputWidget(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                ),
+                labelText: 'Password',
+                obscureText: true,
+              ),
+              TextInputWidget(
+                controller: _passwordConfirmationController,
+                labelText: 'Password confirmation',
                 obscureText: true,
               ),
               ElevatedButton(

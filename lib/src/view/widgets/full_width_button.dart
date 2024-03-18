@@ -10,13 +10,16 @@ class FullWidhtButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: onPressed,
-            child: Text(text),
-          )),
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              child: Text(text,
+                  style: const TextStyle(fontSize: 20, color: Colors.white)))),
     );
   }
 }

@@ -9,8 +9,8 @@ class AuthInteractor {
 
   AuthInteractor({required this.baseUrl});
 
-  Future<String> register(
-      String username, String email, String password) async {
+  Future<String> register(String username, String email, String password,
+      String passwordConfirmation) async {
     final response = await http.post(
       Uri.parse('$baseUrl/api/Auth/register'),
       headers: <String, String>{
@@ -20,6 +20,7 @@ class AuthInteractor {
         'Username': username,
         'Email': email,
         'Password': password,
+        'PasswordConfirmation': passwordConfirmation,
       }),
     );
 

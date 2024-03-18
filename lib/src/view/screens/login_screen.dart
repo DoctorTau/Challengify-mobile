@@ -1,6 +1,7 @@
 import 'package:challengify_app/src/Storage/JwtStorage.dart';
 import 'package:challengify_app/src/view/screens/registration_screen.dart';
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
+import 'package:challengify_app/src/view/widgets/text_input.dart';
 import 'package:challengify_app/src/web_interactors/auth_interactor.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,18 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  _visibilityBasedOnError() {
+    if (_errorMessage.isNotEmpty) {
+      return Text(
+        _errorMessage,
+        style: const TextStyle(color: Colors.red),
+      );
+    } else {
+      return const SizedBox
+          .shrink(); // Returns an empty box when _errorMessage is empty
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,23 +56,20 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: Column(
             children: [
-              TextField(
+              TextInputWidget(
                 controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+                labelText: 'Email',
               ),
-              TextField(
+              TextInputWidget(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                ),
+                labelText: 'Password',
                 obscureText: true,
               ),
               FullWidhtButton(
                 onPressed: _login,
                 text: "Login",
               ),
+              _visibilityBasedOnError(),
               FullWidhtButton(
                 onPressed: () {
                   Navigator.push(
@@ -69,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 text: "Register",
               ),
-              Text(_errorMessage, style: TextStyle(color: Colors.red)),
             ],
           ),
         ),
