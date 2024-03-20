@@ -5,7 +5,6 @@ part 'challenge_creation_dto.freezed.dart';
 part 'challenge_creation_dto.g.dart';
 
 @freezed
-@JsonSerializable(explicitToJson: true)
 class ChallengeCreationDto with _$ChallengeCreationDto {
   factory ChallengeCreationDto({
     required String title,

@@ -5,7 +5,6 @@ part 'result_create_dto.freezed.dart';
 part 'result_create_dto.g.dart';
 
 @freezed
-@JsonSerializable(explicitToJson: true)
 class ResultCreateRequestDto with _$ResultCreateRequestDto {
   factory ResultCreateRequestDto({
     required String name,

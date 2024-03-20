@@ -6,15 +6,6 @@ part of 'result_create_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-
-Map<String, dynamic> _$ResultCreateRequestDtoToJson(
-        ResultCreateRequestDto instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'description': instance.description,
-      'mediaPath': instance.mediaPath,
-    };
-
 _$ResultCreateRequestDtoImpl _$$ResultCreateRequestDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$ResultCreateRequestDtoImpl(

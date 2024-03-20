@@ -2,18 +2,29 @@ import 'package:challengify_app/src/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:logger/logger.dart';
+
 class UserInteractor {
   final String baseUrl;
+  final Logger logger = Logger();
 
   UserInteractor({required this.baseUrl});
 
   Future<User> getUser(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/api/user/$id'));
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/api/user/$id'));
 
-    if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load user');
+      logger.i('HTTP response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        logger.d(response.body);
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      logger.e('Exception caught: $e');
+      rethrow;
     }
   }
 

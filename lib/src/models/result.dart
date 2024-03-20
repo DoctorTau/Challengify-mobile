@@ -1,23 +1,36 @@
-import 'package:challengify_app/src/models/challenge.dart';
-import 'package:challengify_app/src/models/user.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'user.dart';
+import 'challenge.dart';
 
-part 'result.freezed.dart';
 part 'result.g.dart';
 
-@freezed
 @JsonSerializable(explicitToJson: true)
-class Result with _$Result {
-  factory Result({
-    required int resultId,
-    required String name,
-    String? description,
-    required DateTime timestamp,
-    String? mediaPath,
-    required User user,
-    required Challenge challenge,
-  }) = _Result;
+class Result {
+  @JsonKey(name: 'resultId')
+  final int resultId;
+  final String name;
+  @JsonKey(defaultValue: '')
+  final String description;
+  final DateTime timestamp;
+  @JsonKey(defaultValue: '')
+  final String mediaPath;
+
+  @JsonKey(ignore: true)
+  final User? user;
+  
+  @JsonKey(ignore: true)
+  final Challenge? challenge;
+
+  Result({
+    required this.resultId,
+    required this.name,
+    this.description = '',
+    DateTime? timestamp,
+    this.mediaPath = '',
+    this.user,
+    this.challenge,
+  }) : timestamp = timestamp ?? DateTime.now().toUtc();
 
   factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
+  Map<String, dynamic> toJson() => _$ResultToJson(this);
 }
