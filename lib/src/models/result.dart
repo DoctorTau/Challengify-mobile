@@ -15,10 +15,10 @@ class Result {
   @JsonKey(defaultValue: '')
   final String mediaPath;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final User? user;
   
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final Challenge? challenge;
 
   Result({

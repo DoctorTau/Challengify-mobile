@@ -15,10 +15,10 @@ class Challenge {
   @JsonKey(defaultValue: 24)
   final int periodicity;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final List<Result>? results;
-  
-  @JsonKey(ignore: true)
+
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final List<User>? participants;
 
   Challenge({
@@ -31,6 +31,7 @@ class Challenge {
     this.participants,
   }) : startDate = startDate ?? DateTime.now().toUtc();
 
-  factory Challenge.fromJson(Map<String, dynamic> json) => _$ChallengeFromJson(json);
+  factory Challenge.fromJson(Map<String, dynamic> json) =>
+      _$ChallengeFromJson(json);
   Map<String, dynamic> toJson() => _$ChallengeToJson(this);
 }

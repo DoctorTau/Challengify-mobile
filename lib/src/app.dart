@@ -1,5 +1,8 @@
+import 'package:challengify_app/src/models/challenge.dart';
+import 'package:challengify_app/src/view/screens/challenges_screen.dart';
 import 'package:challengify_app/src/view/screens/login_screen.dart';
 import 'package:challengify_app/src/view/screens/profile_screen.dart';
+import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,7 +11,10 @@ import 'settings/settings_controller.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
-  const MyApp({
+  final ChallengeInteractor _challengeInteractor =
+      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+
+  MyApp({
     super.key,
     required this.settingsController,
   });
@@ -69,7 +75,18 @@ class MyApp extends StatelessWidget {
           },
 
           // Define the home property on the MaterialApp to display the
-          home: const ProfileScreen(),
+          home: FutureBuilder(
+              future: _challengeInteractor.getUserChallenges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                } else {
+                  return ChallengesScreen(
+                      challenges: snapshot.data as List<Challenge>);
+                }
+              }),
         );
       },
     );

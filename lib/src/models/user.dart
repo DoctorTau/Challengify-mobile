@@ -16,10 +16,10 @@ class User {
   final int status;
   final DateTime createdAt;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final List<Challenge>? challenges;
-  
-  @JsonKey(ignore: true)
+
+  @JsonKey(includeFromJson: true, includeToJson: false)
   final List<Result>? results;
 
   User({
