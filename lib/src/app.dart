@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
 
           // Define the home property on the MaterialApp to display the
           home: FutureBuilder(
-              future: _challengeInteractor.getUserChallenges(),
+              future:  _challengeInteractor.getUserChallenges(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

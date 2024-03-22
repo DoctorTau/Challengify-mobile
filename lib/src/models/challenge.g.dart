@@ -9,11 +9,12 @@ part of 'challenge.dart';
 Challenge _$ChallengeFromJson(Map<String, dynamic> json) => Challenge(
       challengeId: json['challengeId'] as int,
       name: json['name'] as String,
-      description: json['description'] as String? ?? '',
-      startDate: json['startDate'] == null
-          ? null
-          : DateTime.parse(json['startDate'] as String),
-      periodicity: json['periodicity'] as int? ?? 24,
+      description: json['description'] as String,
+      startDate: DateTime.parse(json['startDate'] as String),
+      periodicity: json['periodicity'] as int,
+      resultIds: _listIntJson(json['resultIds'] as Map<String, dynamic>),
+      participantIds:
+          _listIntJson(json['participantIds'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChallengeToJson(Challenge instance) => <String, dynamic>{
@@ -22,4 +23,6 @@ Map<String, dynamic> _$ChallengeToJson(Challenge instance) => <String, dynamic>{
       'description': instance.description,
       'startDate': instance.startDate.toIso8601String(),
       'periodicity': instance.periodicity,
+      'resultIds': instance.resultIds,
+      'participantIds': instance.participantIds,
     };

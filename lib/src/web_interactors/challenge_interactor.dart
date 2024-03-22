@@ -66,14 +66,28 @@ class ChallengeInteractor {
   }
 
   Future<List<Result>> getChallengeResults(int id) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/api/challenge/$id/results'));
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/challenge/$id/results'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
+      },
+    );
+
+    _logger.d('Response code: ${response.statusCode}');
+    _logger.d('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
-      Iterable list = json.decode(response.body);
-      return list.map((model) => Result.fromJson(model)).toList();
+      final body = json.decode(response.body);
+      List<dynamic> challengesJson = body['\$values'];
+
+      _logger.i('Results loaded successfully');
+      return challengesJson.map((model) => Result.fromJson(model)).toList();
     } else {
-      throw Exception('Failed to load challenge results');
+      throw Exception('Failed to load user challenges');
     }
   }
 
@@ -100,15 +114,23 @@ class ChallengeInteractor {
   }
 
   Future<Result> addResult(int id, ResultCreateRequestDto result) async {
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
+
     final response = await http.put(
       Uri.parse('$baseUrl/api/challenge/$id/add-result'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
       },
       body: jsonEncode(result.toJson()),
     );
 
+    _logger.d('Response code: ${response.statusCode}');
+    _logger.d('Response body: ${response.body}');
+
     if (response.statusCode == 201) {
+      _logger.i('Result added successfully');
       return Result.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to add result');

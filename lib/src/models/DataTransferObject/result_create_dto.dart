@@ -9,8 +9,9 @@ class ResultCreateRequestDto with _$ResultCreateRequestDto {
   factory ResultCreateRequestDto({
     required String name,
     required String description,
-    String? mediaPath,
+    @Default('') String mediaPath,
   }) = _ResultCreateRequestDto;
 
-  factory ResultCreateRequestDto.fromJson(Map<String, dynamic> json) => _$ResultCreateRequestDtoFromJson(json);
+  factory ResultCreateRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$ResultCreateRequestDtoFromJson(json);
 }

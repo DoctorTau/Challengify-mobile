@@ -23,7 +23,7 @@ ResultCreateRequestDto _$ResultCreateRequestDtoFromJson(
 mixin _$ResultCreateRequestDto {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  String? get mediaPath => throw _privateConstructorUsedError;
+  String get mediaPath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $ResultCreateRequestDtoCopyWith<$Res> {
           $Res Function(ResultCreateRequestDto) then) =
       _$ResultCreateRequestDtoCopyWithImpl<$Res, ResultCreateRequestDto>;
   @useResult
-  $Res call({String name, String description, String? mediaPath});
+  $Res call({String name, String description, String mediaPath});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$ResultCreateRequestDtoCopyWithImpl<$Res,
   $Res call({
     Object? name = null,
     Object? description = null,
-    Object? mediaPath = freezed,
+    Object? mediaPath = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -67,10 +67,10 @@ class _$ResultCreateRequestDtoCopyWithImpl<$Res,
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaPath: freezed == mediaPath
+      mediaPath: null == mediaPath
           ? _value.mediaPath
           : mediaPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$ResultCreateRequestDtoImplCopyWith<$Res>
       __$$ResultCreateRequestDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String description, String? mediaPath});
+  $Res call({String name, String description, String mediaPath});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class __$$ResultCreateRequestDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? description = null,
-    Object? mediaPath = freezed,
+    Object? mediaPath = null,
   }) {
     return _then(_$ResultCreateRequestDtoImpl(
       name: null == name
@@ -113,10 +113,10 @@ class __$$ResultCreateRequestDtoImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaPath: freezed == mediaPath
+      mediaPath: null == mediaPath
           ? _value.mediaPath
           : mediaPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -127,7 +127,7 @@ class _$ResultCreateRequestDtoImpl
     with DiagnosticableTreeMixin
     implements _ResultCreateRequestDto {
   _$ResultCreateRequestDtoImpl(
-      {required this.name, required this.description, this.mediaPath});
+      {required this.name, required this.description, this.mediaPath = ''});
 
   factory _$ResultCreateRequestDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ResultCreateRequestDtoImplFromJson(json);
@@ -137,7 +137,8 @@ class _$ResultCreateRequestDtoImpl
   @override
   final String description;
   @override
-  final String? mediaPath;
+  @JsonKey()
+  final String mediaPath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -189,7 +190,7 @@ abstract class _ResultCreateRequestDto implements ResultCreateRequestDto {
   factory _ResultCreateRequestDto(
       {required final String name,
       required final String description,
-      final String? mediaPath}) = _$ResultCreateRequestDtoImpl;
+      final String mediaPath}) = _$ResultCreateRequestDtoImpl;
 
   factory _ResultCreateRequestDto.fromJson(Map<String, dynamic> json) =
       _$ResultCreateRequestDtoImpl.fromJson;
@@ -199,7 +200,7 @@ abstract class _ResultCreateRequestDto implements ResultCreateRequestDto {
   @override
   String get description;
   @override
-  String? get mediaPath;
+  String get mediaPath;
   @override
   @JsonKey(ignore: true)
   _$$ResultCreateRequestDtoImplCopyWith<_$ResultCreateRequestDtoImpl>

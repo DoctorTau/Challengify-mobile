@@ -11,7 +11,7 @@ _$ResultCreateRequestDtoImpl _$$ResultCreateRequestDtoImplFromJson(
     _$ResultCreateRequestDtoImpl(
       name: json['name'] as String,
       description: json['description'] as String,
-      mediaPath: json['mediaPath'] as String?,
+      mediaPath: json['mediaPath'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$ResultCreateRequestDtoImplToJson(

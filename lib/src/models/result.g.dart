@@ -9,11 +9,11 @@ part of 'result.dart';
 Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       resultId: json['resultId'] as int,
       name: json['name'] as String,
-      description: json['description'] as String? ?? '',
-      timestamp: json['timestamp'] == null
-          ? null
-          : DateTime.parse(json['timestamp'] as String),
-      mediaPath: json['mediaPath'] as String? ?? '',
+      description: json['description'] as String,
+      timestamp: DateTime.parse(json['timestamp'] as String),
+      mediaPath: json['mediaPath'] as String,
+      userId: json['userId'] as int,
+      challengeId: json['challengeId'] as int,
     );
 
 Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
@@ -22,4 +22,6 @@ Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'description': instance.description,
       'timestamp': instance.timestamp.toIso8601String(),
       'mediaPath': instance.mediaPath,
+      'userId': instance.userId,
+      'challengeId': instance.challengeId,
     };

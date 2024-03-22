@@ -1,37 +1,36 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'result.dart';
-import 'user.dart';
 
 part 'challenge.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class Challenge {
-  @JsonKey(name: 'challengeId')
   final int challengeId;
   final String name;
-  @JsonKey(defaultValue: '')
   final String description;
   final DateTime startDate;
-  @JsonKey(defaultValue: 24)
   final int periodicity;
-
-  @JsonKey(includeFromJson: true, includeToJson: false)
-  final List<Result>? results;
-
-  @JsonKey(includeFromJson: true, includeToJson: false)
-  final List<User>? participants;
+  @JsonKey(name: 'resultIds', fromJson: _listIntJson)
+  final List<int> resultIds;
+  @JsonKey(name: 'participantIds', fromJson: _listIntJson)
+  final List<int> participantIds;
 
   Challenge({
     required this.challengeId,
     required this.name,
-    this.description = '',
-    DateTime? startDate,
-    this.periodicity = 24,
-    this.results,
-    this.participants,
-  }) : startDate = startDate ?? DateTime.now().toUtc();
+    required this.description,
+    required this.startDate,
+    required this.periodicity,
+    required this.resultIds,
+    required this.participantIds,
+  });
 
   factory Challenge.fromJson(Map<String, dynamic> json) =>
       _$ChallengeFromJson(json);
+
   Map<String, dynamic> toJson() => _$ChallengeToJson(this);
+}
+
+List<int> _listIntJson(Map<String, dynamic> jsonStr) {
+  List<dynamic> values = jsonStr['\$values'];
+  return values.map((value) => value as int).toList();
 }
