@@ -136,4 +136,27 @@ class ChallengeInteractor {
       throw Exception('Failed to add result');
     }
   }
+
+  Future<Result?> getLastUserResult(int challengeId) async {
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/challenge/$challengeId/last-result'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
+      },
+    );
+
+    _logger.d('Response code: ${response.statusCode}');
+    _logger.d('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      _logger.i('Last result loaded successfully');
+      return Result.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load last result');
+    }
+  }
 }

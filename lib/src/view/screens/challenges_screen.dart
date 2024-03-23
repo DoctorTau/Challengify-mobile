@@ -29,7 +29,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
           return Card(
             child: FutureBuilder(
                 future: _challengeInteractor
-                    .getChallengeResults(widget.challenges[index].challengeId),
+                    .getLastUserResult(widget.challenges[index].challengeId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
@@ -37,13 +37,18 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
                     return ListTile(
                       title: Text(widget.challenges[index].name),
                       subtitle: Text(widget.challenges[index].description),
+                      trailing: snapshot.data != null
+                          ? Text((snapshot.data as Result)
+                              .timestamp
+                              .toString()
+                              .split(' ')[0])
+                          : null,
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ChallengeScreen(
                               challenge: widget.challenges[index],
-                              results: snapshot.data as List<Result>,
                             ),
                           ),
                         );
