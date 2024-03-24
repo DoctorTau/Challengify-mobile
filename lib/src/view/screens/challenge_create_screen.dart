@@ -2,6 +2,7 @@ import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:flutter/material.dart';
 import 'package:challengify_app/src/models/DataTransferObject/challenge_creation_dto.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CreateChallengeScreen extends StatefulWidget {
   final VoidCallback onNavigate;
@@ -13,7 +14,7 @@ class CreateChallengeScreen extends StatefulWidget {
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();

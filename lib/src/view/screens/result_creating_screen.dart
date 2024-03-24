@@ -2,6 +2,7 @@ import 'package:challengify_app/src/models/DataTransferObject/result_create_dto.
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CreateResultScreen extends StatefulWidget {
   final int challengeId;
@@ -15,7 +16,7 @@ class CreateResultScreen extends StatefulWidget {
 
 class _CreateResultScreenState extends State<CreateResultScreen> {
   final ChallengeInteractor challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();

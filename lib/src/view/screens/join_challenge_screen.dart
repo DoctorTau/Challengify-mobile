@@ -1,6 +1,7 @@
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class JoinChallengeScreen extends StatefulWidget {
   const JoinChallengeScreen({super.key});
@@ -11,7 +12,7 @@ class JoinChallengeScreen extends StatefulWidget {
 
 class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
   final _joinCodeController = TextEditingController();
 
   Future<void> _joinChallenge() async {
@@ -46,7 +47,8 @@ class _JoinChallengeScreenState extends State<JoinChallengeScreen> {
                   ),
                 ),
               ),
-            ),           const SizedBox(height: 20),
+            ),
+            const SizedBox(height: 20),
             FullWidhtButton(
               onPressed: _joinChallenge,
               text: 'Join Challenge',

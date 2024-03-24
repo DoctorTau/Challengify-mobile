@@ -2,6 +2,7 @@ import 'package:challengify_app/src/Storage/JwtStorage.dart';
 import 'package:challengify_app/src/view/widgets/text_input.dart';
 import 'package:challengify_app/src/web_interactors/auth_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
-  final _authInteractor = AuthInteractor(baseUrl: 'http://10.0.2.2:8080');
+  final _authInteractor = AuthInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   String _errorMessage = '';
 

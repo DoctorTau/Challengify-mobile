@@ -5,6 +5,7 @@ import 'package:challengify_app/src/view/screens/login_screen.dart';
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/web_interactors/user_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final UserInteractor userInteractor =
-      UserInteractor(baseUrl: 'http://10.0.2.2:8080');
+      UserInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   late Future<User?> _userFuture = getUser();
 

@@ -6,6 +6,7 @@ import 'package:challengify_app/src/view/screens/login_screen.dart';
 import 'package:challengify_app/src/view/screens/profile_screen.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   int _selectedIndex = 0;
 

@@ -6,6 +6,7 @@ import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/view/widgets/result_difference.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChallengesScreen extends StatefulWidget {
   final List<Challenge> challenges;
@@ -18,7 +19,7 @@ class ChallengesScreen extends StatefulWidget {
 
 class _ChallengesScreenState extends State<ChallengesScreen> {
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   late Future<List<Challenge>> _challengesFuture;
 
@@ -77,7 +78,7 @@ class _ChallengesColumnState extends State<ChallengesColumn> {
   late Future<List<Result?>> _lastResultsFuture;
 
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   @override
   void initState() {

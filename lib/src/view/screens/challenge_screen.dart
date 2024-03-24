@@ -8,6 +8,7 @@ import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:challengify_app/src/web_interactors/user_interactor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChallengeScreen extends StatefulWidget {
   final Challenge challenge;
@@ -22,10 +23,10 @@ class ChallengeScreen extends StatefulWidget {
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
   final UserInteractor _userInteractor =
-      UserInteractor(baseUrl: 'http://10.0.2.2:8080');
+      UserInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   final ChallengeInteractor _challengeInteractor =
-      ChallengeInteractor(baseUrl: 'http://10.0.2.2:8080');
+      ChallengeInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   late Future<List<Result>> resultsFuture;
 

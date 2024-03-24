@@ -4,6 +4,7 @@ import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/view/widgets/text_input.dart';
 import 'package:challengify_app/src/web_interactors/auth_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _authInteractor = AuthInteractor(baseUrl: 'http://10.0.2.2:8080');
+  final _authInteractor = AuthInteractor(baseUrl: dotenv.env['BASEURL']!);
 
   String _errorMessage = '';
 
