@@ -65,10 +65,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _challengesFuture = _challengeInteractor.getUserChallenges();
-
-    if (Storage.readJwt() == null) {
-      setSelectedIndex(2);
-    }
   }
 
   @override

@@ -36,8 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || snapshot.data == null) {
-          // log error
-
           return Center(
             child: ElevatedButton(
               onPressed: () => Navigator.push(

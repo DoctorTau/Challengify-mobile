@@ -6,6 +6,7 @@ import 'package:challengify_app/src/view/widgets/full_width_button.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:challengify_app/src/web_interactors/user_interactor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ChallengeScreen extends StatefulWidget {
   final Challenge challenge;
@@ -49,6 +50,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             Text(
                 'Timestamp: ${widget.challenge.startDate.toString().split(' ')[0]}',
                 style: TextStyle(fontSize: 18)),
+            SizedBox(height: 20),
+            _ClipBoardCode(joinCode: widget.challenge.joinCode),
             SizedBox(height: 20),
             Text('Results', style: TextStyle(fontSize: 24)),
 
@@ -159,5 +162,51 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
         ),
       ),
     );
+  }
+}
+
+class _ClipBoardCode extends StatelessWidget {
+  final String joinCode;
+
+  _ClipBoardCode({required this.joinCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: joinCode)).then((result) {
+            const snackBar = SnackBar(
+              content: Text('Copied to Clipboard'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          });
+        },
+        child: Row(
+          children: [
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Text(
+                  'Join Code: $joinCode',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.content_copy),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: joinCode)).then((result) {
+                  final snackBar = SnackBar(
+                    content: Text('Copied to Clipboard'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              },
+            ),
+          ],
+        ));
   }
 }

@@ -12,6 +12,7 @@ Challenge _$ChallengeFromJson(Map<String, dynamic> json) => Challenge(
       description: json['description'] as String,
       startDate: DateTime.parse(json['startDate'] as String),
       periodicity: json['periodicity'] as int,
+      joinCode: json['joinCode'] as String,
       resultIds: _listIntJson(json['resultIds'] as Map<String, dynamic>),
       participantIds:
           _listIntJson(json['participantIds'] as Map<String, dynamic>),
@@ -23,6 +24,7 @@ Map<String, dynamic> _$ChallengeToJson(Challenge instance) => <String, dynamic>{
       'description': instance.description,
       'startDate': instance.startDate.toIso8601String(),
       'periodicity': instance.periodicity,
+      'joinCode': instance.joinCode,
       'resultIds': instance.resultIds,
       'participantIds': instance.participantIds,
     };

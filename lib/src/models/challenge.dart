@@ -9,6 +9,7 @@ class Challenge {
   final String description;
   final DateTime startDate;
   final int periodicity;
+  final String joinCode;
   @JsonKey(name: 'resultIds', fromJson: _listIntJson)
   final List<int> resultIds;
   @JsonKey(name: 'participantIds', fromJson: _listIntJson)
@@ -20,6 +21,7 @@ class Challenge {
     required this.description,
     required this.startDate,
     required this.periodicity,
+    required this.joinCode,
     required this.resultIds,
     required this.participantIds,
   });

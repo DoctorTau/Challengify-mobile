@@ -10,7 +10,7 @@ class UserInteractor {
 
   UserInteractor({required this.baseUrl});
 
-  Future<User> getUser(int id) async {
+  Future<User?> getUser(int id) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/api/user/$id'));
 
@@ -19,6 +19,8 @@ class UserInteractor {
       if (response.statusCode == 200) {
         logger.d(response.body);
         return User.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 404) {
+        return null;
       } else {
         throw Exception('Failed to load user');
       }

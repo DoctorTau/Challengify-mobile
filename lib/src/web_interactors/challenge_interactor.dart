@@ -116,6 +116,31 @@ class ChallengeInteractor {
     }
   }
 
+  Future<Challenge> joinChallenge(String joinCode) async {
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/challenges/$joinCode/join'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
+      },
+    );
+
+    _logger.d('Response code: ${response.statusCode}');
+    _logger.d('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      _logger.i('Challenge joined successfully');
+      return Challenge.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 404) {
+      throw Exception('Challenge not found');
+    } else {
+      throw Exception('Failed to join challenge');
+    }
+  }
+
   Future<Result> addResult(int id, ResultCreateRequestDto result) async {
     final String? jwt = await Storage.readJwt();
     if (jwt == null) throw Exception('No JWT token found');
