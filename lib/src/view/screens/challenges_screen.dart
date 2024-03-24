@@ -3,6 +3,7 @@ import 'package:challengify_app/src/models/result.dart';
 import 'package:challengify_app/src/view/screens/challenge_screen.dart';
 import 'package:challengify_app/src/view/screens/join_challenge_screen.dart';
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
+import 'package:challengify_app/src/view/widgets/result_difference.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:flutter/material.dart';
 
@@ -93,6 +94,7 @@ class _ChallengesColumnState extends State<ChallengesColumn> {
     return ListView.builder(
       itemCount: widget.challenges.length,
       itemBuilder: (context, index) {
+        DateTime lastResultTimestamp = widget.challenges[index].startDate;
         return Card(
             child: ListTile(
           title: Text(widget.challenges[index].name),
@@ -103,14 +105,17 @@ class _ChallengesColumnState extends State<ChallengesColumn> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError || snapshot.data == null) {
-                  return Text('No results yet');
+                  return TimeDifferenceWidget(
+                      result: widget.challenges[index].startDate,
+                      periodicity: widget.challenges[index].periodicity);
                 } else {
                   Result? result = snapshot.data![index];
-                  if (result == null) {
-                    return const Text('No results yet');
+                  if (result != null) {
+                    lastResultTimestamp = result.timestamp;
                   }
-                  return Text(
-                      result.timestamp.toLocal().toString().split(' ')[0]);
+                  return TimeDifferenceWidget(
+                      result: lastResultTimestamp,
+                      periodicity: widget.challenges[index].periodicity);
                 }
               }),
           onTap: () {
@@ -119,6 +124,7 @@ class _ChallengesColumnState extends State<ChallengesColumn> {
               MaterialPageRoute(
                 builder: (context) => ChallengeScreen(
                   challenge: widget.challenges[index],
+                  lastResultTimestamp: lastResultTimestamp,
                 ),
               ),
             ).then((value) => setState(() {

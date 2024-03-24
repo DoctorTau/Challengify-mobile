@@ -3,6 +3,7 @@ import 'package:challengify_app/src/models/result.dart';
 import 'package:challengify_app/src/view/screens/result_creating_screen.dart';
 import 'package:challengify_app/src/view/screens/result_screen.dart';
 import 'package:challengify_app/src/view/widgets/full_width_button.dart';
+import 'package:challengify_app/src/view/widgets/result_difference.dart';
 import 'package:challengify_app/src/web_interactors/challenge_interactor.dart';
 import 'package:challengify_app/src/web_interactors/user_interactor.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ import 'package:flutter/services.dart';
 
 class ChallengeScreen extends StatefulWidget {
   final Challenge challenge;
+  final DateTime lastResultTimestamp;
 
-  ChallengeScreen({super.key, required this.challenge});
+  ChallengeScreen(
+      {super.key, required this.challenge, required this.lastResultTimestamp});
 
   @override
   State<ChallengeScreen> createState() => _ChallengeScreenState();
@@ -47,9 +50,17 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             Text('Description: ${widget.challenge.description}',
                 style: TextStyle(fontSize: 18)),
             SizedBox(height: 20),
-            Text(
-                'Timestamp: ${widget.challenge.startDate.toString().split(' ')[0]}',
-                style: TextStyle(fontSize: 18)),
+            Row(
+              children: [
+                Text('Till next result:', style: TextStyle(fontSize: 18)),
+                TimeDifferenceWidget(
+                  result: widget.lastResultTimestamp,
+                  periodicity: widget.challenge.periodicity,
+                  fontSize: 18,
+                ),
+              ],
+            ),
+
             SizedBox(height: 20),
             _ClipBoardCode(joinCode: widget.challenge.joinCode),
             SizedBox(height: 20),
@@ -114,6 +125,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                 }), // Displaying user's name, 'Unknown' if null
                                             SizedBox(height: 8.0),
                                             ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.blue),
+                                              ),
                                               onPressed: () {
                                                 Navigator.push(
                                                   context,
@@ -125,8 +141,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   ),
                                                 );
                                               },
-                                              child: Text('View Result'),
-                                            ),
+                                              child: Text('View Result',
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
+                                            )
                                           ],
                                         ),
                                       ),
