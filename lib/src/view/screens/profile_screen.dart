@@ -17,6 +17,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final UserInteractor userInteractor =
       UserInteractor(baseUrl: 'http://10.0.2.2:8080');
 
+  late Future<User?> _userFuture = getUser();
+
   Future<User?> getUser() async {
     final String? jwt = await Storage.readJwt();
     if (jwt == null || jwt.isEmpty) {
@@ -24,29 +26,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       String idString = JwtDecoder.decode(jwt)['sub'];
       int id = int.parse(idString);
-      return await userInteractor.getUser(id);
+      return userInteractor.getUser(id);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _userFuture = getUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User?>(
-      future: getUser(),
+      future: _userFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || snapshot.data == null) {
           return Center(
-            child: ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              ),
-              child: Text('Go to Login Page'),
+            child: FullWidhtButton(
+              onPressed: () => _goToLoginPage(context),
+              text: 'Go to Login Page',
             ),
           );
         } else {
-          // Data is available, display user information
           User user = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -63,14 +67,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(fontSize: 20)),
 
                 FullWidhtButton(
-                    onPressed: () async => {
-                          await Storage.removeJwt(),
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                          )
-                        },
+                    onPressed: () async =>
+                        {await Storage.removeJwt(), _goToLoginPage(context)},
                     text: "Log out")
               ],
             ),
@@ -78,5 +76,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       },
     );
+  }
+
+  Future<void> _goToLoginPage(BuildContext context) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    ).then((value) => setState(() {
+          _userFuture = getUser();
+        }));
   }
 }
