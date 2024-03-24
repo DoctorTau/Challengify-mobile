@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorMessage = '';
       });
 
-      Navigator.pushReplacementNamed(context, '/profile');
+      Navigator.pop(context);
     } catch (e) {
       setState(() {
         _errorMessage = 'Login failed: $e';

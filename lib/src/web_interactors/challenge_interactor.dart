@@ -25,10 +25,13 @@ class ChallengeInteractor {
   }
 
   Future<Challenge> createChallenge(ChallengeCreationDto challenge) async {
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
     final response = await http.post(
       Uri.parse('$baseUrl/api/challenge/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
       },
       body: jsonEncode(challenge.toJson()),
     );
@@ -42,7 +45,7 @@ class ChallengeInteractor {
 
   Future<List<Challenge>> getUserChallenges() async {
     final String? jwt = await Storage.readJwt();
-    if (jwt == null) throw Exception('No JWT token found');
+    if (jwt == null) return [];
 
     final response = await http.get(
       Uri.parse('$baseUrl/api/challenge/user'),
@@ -155,6 +158,9 @@ class ChallengeInteractor {
     if (response.statusCode == 200) {
       _logger.i('Last result loaded successfully');
       return Result.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 204) {
+      _logger.i('No result found');
+      return null;
     } else {
       throw Exception('Failed to load last result');
     }

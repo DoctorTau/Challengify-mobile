@@ -19,49 +19,39 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Challenges'),
-      ),
-      body: ListView.builder(
-        itemCount: widget.challenges.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: FutureBuilder(
-                future: _challengeInteractor
-                    .getLastUserResult(widget.challenges[index].challengeId),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasData) {
-                    return ListTile(
-                      title: Text(widget.challenges[index].name),
-                      subtitle: Text(widget.challenges[index].description),
-                      trailing: snapshot.data != null
-                          ? Text((snapshot.data as Result)
-                              .timestamp
-                              .toString()
-                              .split(' ')[0])
-                          : null,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChallengeScreen(
-                              challenge: widget.challenges[index],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  }
-                  return const Text('Something went wrong');
-                }),
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: widget.challenges.length,
+      itemBuilder: (context, index) {
+        return Card(
+            child: ListTile(
+          title: Text(widget.challenges[index].name),
+          subtitle: Text(widget.challenges[index].description),
+          trailing: FutureBuilder(
+              future: _challengeInteractor
+                  .getLastUserResult(widget.challenges[index].challengeId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError || snapshot.data == null) {
+                  return Text('No results yet');
+                } else {
+                  Result result = snapshot.data as Result;
+                  return Text(
+                      result.timestamp.toLocal().toString().split(' ')[0]);
+                }
+              }),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChallengeScreen(
+                  challenge: widget.challenges[index],
+                ),
+              ),
+            );
+          },
+        ));
+      },
     );
   }
 }
