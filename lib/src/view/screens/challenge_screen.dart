@@ -111,7 +111,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             Text(result.description),
                                             SizedBox(height: 8.0),
                                             Text(
-                                                'Created at : ${result.timestamp.toLocal().toString()[0]}'), // Formatting timestamp
+                                                'Created at : ${result.timestamp.toLocal().toString().split(" ")[0]}'), // Formatting timestamp
                                             SizedBox(height: 8.0),
                                             FutureBuilder(
                                                 future: _userInteractor
