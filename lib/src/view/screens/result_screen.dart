@@ -1,10 +1,14 @@
 import 'package:challengify_app/src/models/result.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ResultScreen extends StatelessWidget {
   final Result result;
+  final String baseUrl = dotenv.env['BASEURL']!;
 
-  ResultScreen({Key? key, required this.result}) : super(key: key);
+  ResultScreen({Key? key, required this.result}) : super(key: key) {
+    print(result.mediaPath);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,11 @@ class ResultScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 Text('Timestamp: ${result.timestamp}',
                     style: TextStyle(fontSize: 18)),
+                SizedBox(height: 20),
+                // Image from url
+                if (result.mediaPath.isNotEmpty)
+                  Image.network(
+                      "$baseUrl/api/challenge/media/${result.mediaPath}"),
               ],
             ),
           ),

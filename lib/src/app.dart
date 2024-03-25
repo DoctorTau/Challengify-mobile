@@ -1,4 +1,3 @@
-import 'package:challengify_app/src/Storage/JwtStorage.dart';
 import 'package:challengify_app/src/models/challenge.dart';
 import 'package:challengify_app/src/view/screens/challenge_create_screen.dart';
 import 'package:challengify_app/src/view/screens/challenges_screen.dart';

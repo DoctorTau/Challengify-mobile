@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:challengify_app/src/Storage/JwtStorage.dart';
 import 'package:challengify_app/src/models/DataTransferObject/challenge_creation_dto.dart';
 import 'package:challengify_app/src/models/DataTransferObject/result_create_dto.dart';
@@ -7,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:logger/logger.dart';
+import 'package:path/path.dart';
 
 class ChallengeInteractor {
   final String baseUrl;
@@ -145,14 +148,52 @@ class ChallengeInteractor {
     final String? jwt = await Storage.readJwt();
     if (jwt == null) throw Exception('No JWT token found');
 
-    final response = await http.put(
-      Uri.parse('$baseUrl/api/challenge/$id/add-result'),
-      headers: <String, String>{
+    final uri = Uri.parse('$baseUrl/api/challenge/$id/add-result');
+    var request = http.MultipartRequest('PUT', uri)
+      ..headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $jwt',
-      },
-      body: jsonEncode(result.toJson()),
-    );
+      })
+      // Add text fields
+      ..fields['Name'] = result.name
+      ..fields['Description'] = result.description;
+
+    var response = await http.Response.fromStream(await request.send());
+
+    _logger.d('Response code: ${response.statusCode}');
+    _logger.d('Response body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      _logger.i('Result added successfully');
+      return Result.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to add result');
+    }
+  }
+
+  Future<Result> addResultWithMedia(
+      int id, ResultCreateRequestDto result, File file) async {
+    final String? jwt = await Storage.readJwt();
+    if (jwt == null) throw Exception('No JWT token found');
+
+    // Create a multipart request
+    final uri = Uri.parse('$baseUrl/api/challenge/$id/add-result');
+    var request = http.MultipartRequest('PUT', uri)
+      ..headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $jwt',
+      })
+      // Add text fields
+      ..fields['Name'] = result.name
+      ..fields['Description'] = result.description
+      // Add file
+      ..files.add(await http.MultipartFile.fromPath(
+        'file', // This should match the name of the param in your API
+        file.path,
+        filename: basename(file.path), // Optional: to set a custom file name
+      ));
+
+    var response = await http.Response.fromStream(await request.send());
 
     _logger.d('Response code: ${response.statusCode}');
     _logger.d('Response body: ${response.body}');
