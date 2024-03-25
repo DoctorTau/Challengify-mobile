@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
               _visibilityBasedOnError(),
               FullWidhtButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => RegisterPage()),
                   );

@@ -124,7 +124,7 @@ class ChallengeInteractor {
     if (jwt == null) throw Exception('No JWT token found');
 
     final response = await http.put(
-      Uri.parse('$baseUrl/challenges/$joinCode/join'),
+      Uri.parse('$baseUrl/api/challenge/$joinCode/join'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $jwt',

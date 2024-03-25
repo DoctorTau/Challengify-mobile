@@ -47,7 +47,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         } else if (snapshot.hasError || snapshot.data == null) {
           return Center(
             child: FullWidhtButton(
-              onPressed: () => _goToLoginPage(context),
+              onPressed: () => {
+                _goToLoginPage(context).then((value) => setState(() {
+                      _userFuture = getUser();
+                    }))
+              },
               text: 'Go to Login Page',
             ),
           );
