@@ -93,7 +93,7 @@ class ChallengeInteractor {
       _logger.i('Results loaded successfully');
       return challengesJson.map((model) => Result.fromJson(model)).toList();
     } else {
-      throw Exception('Failed to load user challenges');
+      throw Exception('Failed to load user challenges results');
     }
   }
 
