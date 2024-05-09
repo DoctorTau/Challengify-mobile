@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CreateChallengeScreen extends StatefulWidget {
   final VoidCallback onNavigate;
-  CreateChallengeScreen({Key? key, required this.onNavigate}) : super(key: key);
+  const CreateChallengeScreen({super.key, required this.onNavigate});
 
   @override
   _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
@@ -25,7 +25,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Challenge'),
+        title: const Text('Create Challenge'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,7 +36,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
               children: <Widget>[
                 TextFormField(
                   controller: _titleController,
-                  decoration: InputDecoration(labelText: 'Title'),
+                  decoration: const InputDecoration(labelText: 'Title'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a title';
@@ -44,15 +44,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(labelText: 'Description'),
+                  decoration: const InputDecoration(labelText: 'Description'),
                   // Optional field, so no validator needed
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 DropdownButtonFormField<int>(
-                  decoration: InputDecoration(labelText: 'Periodicity (days)'),
+                  decoration: const InputDecoration(labelText: 'Periodicity (days)'),
                   value: _selectedPeriodicity,
                   onChanged: (newValue) {
                     setState(() {
@@ -67,7 +67,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 FullWidhtButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {

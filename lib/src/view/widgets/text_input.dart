@@ -6,7 +6,7 @@ class TextInputWidget extends StatelessWidget {
   final bool obscureText;
 
   const TextInputWidget(
-      {required this.controller,
+      {super.key, required this.controller,
       required this.labelText,
       this.obscureText = false});
 

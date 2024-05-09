@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       future: _userFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || snapshot.data == null) {
           return Center(
             child: FullWidhtButton(
@@ -62,14 +62,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Name: ${user.name}', style: TextStyle(fontSize: 20)),
-                SizedBox(height: 10),
-                Text('Email: ${user.email}', style: TextStyle(fontSize: 20)),
-                SizedBox(height: 10),
+                Text('Name: ${user.name}', style: const TextStyle(fontSize: 20)),
+                const SizedBox(height: 10),
+                Text('Email: ${user.email}', style: const TextStyle(fontSize: 20)),
+                const SizedBox(height: 10),
                 // print year, month, day,
                 Text(
                     'Created at: ${user.createdAt.toLocal().toString().split(' ')[0]}',
-                    style: TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 20)),
 
                 FullWidhtButton(
                     onPressed: () async =>
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _goToLoginPage(BuildContext context) {
     return Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     ).then((value) => setState(() {
           _userFuture = getUser();
         }));

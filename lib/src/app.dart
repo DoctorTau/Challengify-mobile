@@ -13,7 +13,7 @@ import 'settings/settings_controller.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatefulWidget {
-  MyApp({
+  const MyApp({
     super.key,
     required this.settingsController,
   });
@@ -90,11 +90,11 @@ class _MyAppState extends State<MyApp> {
           themeMode: widget.settingsController.themeMode,
           routes: {
             '/profile': (context) => const ProfileScreen(),
-            '/login': (context) => LoginPage(),
+            '/login': (context) => const LoginPage(),
           },
           home: Scaffold(
             appBar: AppBar(
-              title: Text("Challengify"),
+              title: const Text("Challengify"),
             ),
             body: _screens[_selectedIndex],
             bottomNavigationBar: BottomNavigationBar(

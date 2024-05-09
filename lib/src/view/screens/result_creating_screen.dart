@@ -11,8 +11,7 @@ import 'package:image_picker/image_picker.dart';
 class CreateResultScreen extends StatefulWidget {
   final int challengeId;
 
-  const CreateResultScreen({Key? key, required this.challengeId})
-      : super(key: key);
+  const CreateResultScreen({super.key, required this.challengeId});
 
   @override
   _CreateResultScreenState createState() => _CreateResultScreenState();
@@ -50,7 +49,7 @@ class _CreateResultScreenState extends State<CreateResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Result'),
+        title: const Text('Create Result'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -60,7 +59,7 @@ class _CreateResultScreenState extends State<CreateResultScreen> {
             children: <Widget>[
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a name';
@@ -68,10 +67,10 @@ class _CreateResultScreenState extends State<CreateResultScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -79,16 +78,16 @@ class _CreateResultScreenState extends State<CreateResultScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               FullWidhtButton(
                 onPressed: _pickImage,
                 text: 'Pick Image from Gallery',
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _image != null
                   ? Expanded(child: Image.file(_image!))
-                  : Text('No image selected'),
-              SizedBox(height: 20),
+                  : const Text('No image selected'),
+              const SizedBox(height: 20),
               FullWidhtButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {

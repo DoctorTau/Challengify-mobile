@@ -14,7 +14,7 @@ class ChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final DateTime lastResultTimestamp;
 
-  ChallengeScreen(
+  const ChallengeScreen(
       {super.key, required this.challenge, required this.lastResultTimestamp});
 
   @override
@@ -49,11 +49,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Description: ${widget.challenge.description}',
-                style: TextStyle(fontSize: 18)),
-            SizedBox(height: 20),
+                style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 20),
             Row(
               children: [
-                Text('Till next result:', style: TextStyle(fontSize: 18)),
+                const Text('Till next result:', style: TextStyle(fontSize: 18)),
                 TimeDifferenceWidget(
                   result: widget.lastResultTimestamp,
                   periodicity: widget.challenge.periodicity,
@@ -62,10 +62,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               ],
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _ClipBoardCode(joinCode: widget.challenge.joinCode),
-            SizedBox(height: 20),
-            Text('Results', style: TextStyle(fontSize: 24)),
+            const SizedBox(height: 20),
+            const Text('Results', style: TextStyle(fontSize: 24)),
 
             // Displaying results if the challenge.result is not null
             Expanded(
@@ -77,7 +77,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator(); // Show loading spinner while waiting for the future to complete
+                          return const CircularProgressIndicator(); // Show loading spinner while waiting for the future to complete
                         } else if (snapshot.hasError) {
                           return Text(
                               'Error: ${snapshot.error}'); // Show error message if the future completes with an error
@@ -93,26 +93,26 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                     height: 220,
                                     width: double.infinity,
                                     child: Card(
-                                      margin: EdgeInsets.all(8.0),
+                                      margin: const EdgeInsets.all(8.0),
                                       child: Padding(
-                                        padding: EdgeInsets.all(16.0),
+                                        padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
                                               result.name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 18.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SizedBox(height: 8.0),
+                                            const SizedBox(height: 8.0),
                                             Text(result.description),
-                                            SizedBox(height: 8.0),
+                                            const SizedBox(height: 8.0),
                                             Text(
                                                 'Created at : ${result.timestamp.toLocal().toString().split(" ")[0]}'), // Formatting timestamp
-                                            SizedBox(height: 8.0),
+                                            const SizedBox(height: 8.0),
                                             FutureBuilder(
                                                 future: _userInteractor
                                                     .getUser(result.userId),
@@ -121,10 +121,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                     return Text(
                                                         'User: ${snapshot.data?.name ?? 'Unknown'}');
                                                   } else {
-                                                    return Text('Unknown');
+                                                    return const Text('Unknown');
                                                   }
                                                 }), // Displaying user's name, 'Unknown' if null
-                                            SizedBox(height: 8.0),
+                                            const SizedBox(height: 8.0),
                                             ElevatedButton(
                                               style: ButtonStyle(
                                                 backgroundColor:
@@ -142,7 +142,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   ),
                                                 );
                                               },
-                                              child: Text('View Result',
+                                              child: const Text('View Result',
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                             )
@@ -187,7 +187,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
 class _ClipBoardCode extends StatelessWidget {
   final String joinCode;
 
-  _ClipBoardCode({required this.joinCode});
+  const _ClipBoardCode({required this.joinCode});
 
   @override
   Widget build(BuildContext context) {
@@ -204,21 +204,21 @@ class _ClipBoardCode extends StatelessWidget {
           children: [
             Flexible(
               child: Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                 ),
                 child: Text(
                   'Join Code: $joinCode',
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.content_copy),
+              icon: const Icon(Icons.content_copy),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: joinCode)).then((result) {
-                  final snackBar = SnackBar(
+                  const snackBar = SnackBar(
                     content: Text('Copied to Clipboard'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

@@ -6,9 +6,8 @@ class TimeDifferenceWidget extends StatefulWidget {
   final int periodicity;
   final double fontSize;
 
-  TimeDifferenceWidget(
-      {Key? key, required this.result, required this.periodicity, this.fontSize = 14})
-      : super(key: key);
+  const TimeDifferenceWidget(
+      {super.key, required this.result, required this.periodicity, this.fontSize = 14});
 
   @override
   _TimeDifferenceWidgetState createState() => _TimeDifferenceWidgetState();
@@ -21,7 +20,7 @@ class _TimeDifferenceWidgetState extends State<TimeDifferenceWidget> {
   void initState() {
     super.initState();
     // Start a timer that ticks every second.
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         // This empty setState call tells the widget to rebuild every second,
         // updating the display with the latest time difference.
@@ -73,7 +72,7 @@ class _TimeDifferenceWidgetState extends State<TimeDifferenceWidget> {
     }
 
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Text(
         displayText,
         style: TextStyle(fontSize: widget.fontSize, color: textColor),

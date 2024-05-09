@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       } else {
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.popUntil(context, (route) => false);
       }
     } catch (e) {
       setState(() {
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               ElevatedButton(
                 onPressed: _register,
-                child: Text('Register'),
+                child: const Text('Register'),
               ),
               Text(_errorMessage),
             ],
